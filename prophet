@@ -1,0 +1,54 @@
+import pandas as pd
+
+# Define custom holidays
+import pandas as pd
+
+custom_events = pd.DataFrame({
+    'holiday': [
+        'super_bowl',
+        'valentines_day',
+        'valentines_day',
+        'valentines_day',
+        'mothers_day'
+    ],
+    'ds': pd.to_datetime([
+        '2025-02-09',  # Super Bowl
+        '2025-02-13',  # Valentine buildup
+        '2025-02-14',  # Valentine's Day
+        '2025-02-15',  # Post-day
+        '2025-05-11'   # Mother's Day
+    ]),
+    'lower_window': [0, 0, 0, 0, 0],
+    'upper_window': [0, 0, 0, 0, 0]
+})
+
+from prophet import Prophet
+
+# Your original monthly data (12 months from 2024)
+df = pd.DataFrame({
+    'ds': pd.date_range(start='2024-01-01', periods=12, freq='MS'),
+    'y': [525381,
+509762,
+424103,
+284696,
+325199,
+309604,
+386038,
+406312,
+386317,
+387008,
+434469,
+426540]
+})
+
+# Initialize model with holidays
+model = Prophet(holidays=custom_events)
+model.fit(df)
+
+# Forecast next 6 months
+future = model.make_future_dataframe(periods=6, freq='MS')
+forecast = model.predict(future)
+
+# Show forecast
+forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail(6)
+print(forecast[['ds', 'yhat', 'yhat_lower', 'yhat_upper']].tail(6))
