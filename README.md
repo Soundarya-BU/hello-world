@@ -1,6 +1,2 @@
-# hello-world
-This repository is for practicing the GitHub Flow.
-Hi World! 
-I am Soundarya, I am here to learn Git version controls.
-edit from codespace
-learning to commit
+DoorDash Take Home Assignment - Prediction of H1 2025 call volume - Prophet Method
+This repo has the code for prophet model prediction of H1 2025 call volume based on 2024 call history data.
